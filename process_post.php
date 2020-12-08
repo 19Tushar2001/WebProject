@@ -12,26 +12,33 @@ session_start();
 $username = $_SESSION['user'];
 use PHPMailer\PHPMailer\PHPMailer;
  use PHPMailer\PHPMailer\Exception;
+echo $id;
 $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 //    echo var_dump($_POST['command']);
 
 
 
-    if($_POST['command'] === "Post") 
+    if(isset($_POST['Post'])) 
     {
+       
         if($_POST['content'] !== "" )
         {
-            
+            echo $id;
             $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $query = "INSERT INTO comments (username, content) values (:username, :content)";
+            $query = "INSERT INTO comments (Post_ID,username,content,) values (:id,:username, :content)";
             
             $newStatement = $db->prepare($query);
+            $newStatement->bindValue(':id',$id);
             $newStatement->bindValue(':username', $username);
-            $newStatement->bindValue(':content', $content);
-            $newStatement->execute();
+            $newStatement->bindValue(':content', $content);         
+            if($newStatement->execute())
+            {
+                $insert_id = $db->lastInsertId();
+                header('location:PageView.php');
+            }
 
-            $insert_id = $db->lastInsertId();
-            header('location:MarsRover.php');
+            
+            
         }
         else
         {

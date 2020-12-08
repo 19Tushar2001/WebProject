@@ -16,9 +16,10 @@ if(isset($_POST['username']) AND isset($_POST['password'])){
 
 	$admin = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
 	$password = filter_input(INPUT_POST,'password',FILTER_SANITIZE_STRING);
-	$query = "SELECT * FROM admin WHERE Username = '$admin'";
+	$query = "SELECT Password FROM admin WHERE Username = '$admin'";
 	$prepare = $db->prepare($query);
-    
+    $prepare->execute();
+    $pass = $prepare->fetch();
     
     
     if(empty($admin))
@@ -33,42 +34,19 @@ if(isset($_POST['username']) AND isset($_POST['password'])){
         
     }
     
-    if($prepare->execute())
+    if($pass[0] == $password)
     {
         session_start();
         $_SESSION['user']=admin;
         header('location: MarsRover.php');
         
-//        $row = $prepare->fetch();
-//        $q_password = $row["2"];
-//        if(password_verify($password, $q_password))
-//        {           
-//            ///////////////////////////////////////////////////////////////////
-//    if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response']))
-//  {
-//        $secret = '6LfeYuIZAAAAAFmufK6vla-UwIl0Q_h8ChhRI-q-';
-//        $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
-//        $responseData = json_decode($verifyResponse);
-//        if($responseData->success)
-//        {
-//            
-//            header("location:Page-4AboutUs.php");
-//            $_SESSION['user']=$username;
-//        }
-//        else
-//        {
-//            $error1 = "reCAPTCHA";
-//            $error2 = "Not Entered";
-//        }
-//   }
-//    ////////////////////////////////////////////////////////////////
 
         }
         else
         {
             $error1 = "Not";
             $error2 = "Authorized";
-            session_abort;
+            session_abort();
         }
    }
     

@@ -45,42 +45,9 @@ session_start();
                 <?php if($_SESSION['user'] == 'admin') {?>
                <p><a href="PostEdit.php?id=<?=$results['LaunchID']?>">Edit</a></p>
                <?php }?>
-                <p><a href="Comment.php?id=<?=$results['LaunchID']?>">Add a comment.</a></p>
+                <p><a href="PageView.php?id=<?=$results['LaunchID']?>">VISIT PAGE</a></p>
                 
-                <div id="all_blogs">
-        <?php if($blogs!= null): ?>
-        <?php for($i = 0; $i < 7 && $i < $rows; $i++): ?>
-        <div class="blog_post">
-
-            <h2><a href="show.php?id=<?=$blogs[$i]['id']?>"><?=$blogs[$i]['username']?></a> says</h2>
-
-            <div class='blog_content'>
-                <?php if(strlen($blogs[$i]['content']) > 200): ?>
-                <p>
-                    <?=$blogs[$i]['content']?>
-                    <!-- <a href="show.php?id=<?=$result[$i]['id']?>">Read Full Post...</a> -->
-                </p>
-                <?php else:?>
-                <?=$blogs[$i]['content']?>
-                <?php endif?>
-
-            </div>
-            <p>
-                <small>
-                    posted on <?=date_format(date_create($blogs[$i]['currdate']),'F d, Y, h:i a')?>
-                    <?php if($_SESSION['user'] == 'admin') {?>
-                    <br><a href="edit.php?id=<?=$blogs[$i]['id']?>">edit</a>
-                    <?php }?>
-
-                </small>
-            </p>
-        </div>
-        <?php endfor ?>
-
-        <?php else: ?>
-        <p>No comments in table, be the first one to create.</p>
-        <?php endif ?>
-    </div>
+                
                
             </div>
         </div>

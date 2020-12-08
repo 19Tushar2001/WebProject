@@ -189,6 +189,7 @@ $username = $_SESSION['user'];
         <?php else: ?>
         <p>No comments in table, be the first one to create.</p>
         <?php endif ?>
+        
     </div>
 <!--    -->
 <!--    action="process_post.php?id=<?=$rocket['LaunchID']?>"-->
