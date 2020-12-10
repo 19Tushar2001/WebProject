@@ -54,7 +54,7 @@ logo {
 
 }
 
-img:not(.service-img) {
+img:not(.service-img,#searchImage) {
     width: 100px;
     height: 100px;
     border-radius: 60%;
@@ -355,6 +355,16 @@ textarea:focus {
     margin-right: 10px;
     flex-wrap: wrap;
 }
+
+.outer-launch h3 a
+{
+    text-decoration: none;
+    color: white;
+}
+
+.outer-launch h3 a:hover{
+    font-weight: 100;
+}
 #footer-page-2 {
     display: flex;
     background: rgba(0, 0, 0, 0.8);
@@ -630,8 +640,70 @@ input[type="password"],input[type="email"]:focus {
     border-radius: 25px;
 }
 
+#dataBlock
+{
+    width: auto;
+    height: auto;
+    background: rgba(0, 0, 0, 0.65);
+      
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+/*    transform: translate(-50%, -50%);*/
+    color: #fff;
+/*    left: 50%;*/
+    
+    padding: 30px 30px;
+}
+#locationTable
+{
+     width: 100%;
+    height: auto;
+    background: rgba(0, 0, 0, 0.65);
+      
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+/*    transform: translate(-50%, -50%);*/
+    color: #fff;
+/*    left: 50%;*/
+    
+    padding: 30px 30px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+   
+}
+#locationTable tr th
+{
+    padding: auto;
+    justify-content: center;
+    width: inherit;
+    text-align: left;
+}
 
+#location
+{
+    background: rgba(0, 0, 0, 0.65);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+}
 
+#searchImage
+{
+    width: 100px;
+    height: 100px;
+    border-radius: 60%;
+    position: relative;
+    float: right;
+}
+#Captcha
+{
+    background-color: white;
+    width: 18%;
+    padding: 5px;
+    
+}
 @keyframes text {
 
     0% {

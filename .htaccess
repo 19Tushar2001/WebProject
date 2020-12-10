@@ -1,0 +1,5 @@
+RewriteEngine on
+
+RewriteRule ^PageView/([^/\.]+)?$ WebDev2/Z-Project/PageView.php?id=$1 [L]
+
+RewriteRule ^PageView.php\/?u=(.*)$ PageView.php/$1/ [L,NC,R=301]

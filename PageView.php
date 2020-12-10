@@ -1,9 +1,9 @@
 <?php
 
-
   require 'db-connect.php';
 session_start();
 $username = $_SESSION['user'];
+
 
     if(!filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT))
     {
@@ -50,35 +50,64 @@ $username = $_SESSION['user'];
    $blogs= $statementone->fetchAll();
    $rowsone = $statementone->rowCount();
 
-    if(isset($_POST['Post'])) 
-    {
-       
-        if($_POST['content'] !== "" )
-        {
-            
-            $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $query = "INSERT INTO comments (Post_ID,username,content) values (:id,:username, :content)";
-            
-            
-            $newStatement = $db->prepare($query);
-            $newStatement->bindValue(':id',$id);
-            $newStatement->bindValue(':username', $username);
-            $newStatement->bindValue(':content', $content);         
-            if($newStatement->execute())
-            { echo $id;
-                $insert_id = $db->lastInsertId();
-                header('location:PageView.php');
-            }
+//CAPTCHA...
 
-            
-            
-        }
-        else
-        {
-            echo "input valid data";
-        }
-    }
 
+    $first_digit = rand(1,10);
+$second_digit = rand(1,10);
+
+$operands = array("+","-","*");
+$operand = rand(0,count($operands)-1);
+
+$operand = $operands[$operand];
+
+$answer = "";
+switch($operand)
+{
+    case "+":
+        $answer = $first_digit + $second_digit;
+        break;
+    case "-":
+        $answer = $first_digit - $second_digit;
+        break;
+    case "*":
+        $answer = $first_digit * $second_digit;
+        break;     
+}
+
+$_SESSION["result"] = $answer;
+
+
+//    if(isset($_POST['Post'])) 
+//    {
+//        if($_POST['content'] !== "" && $_POST["number"] === $answer)
+//        {
+//            session_abort();
+//            
+//            $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+//            $query = "INSERT INTO comments (Post_ID,username,content) values (:id,:username, :content)";
+//            
+//            
+//            $newStatement = $db->prepare($query);
+//            $newStatement->bindValue(':id',$id);
+//            $newStatement->bindValue(':username', $username);
+//            $newStatement->bindValue(':content', $content);         
+//            if($newStatement->execute())
+//            { echo $id;
+//                $insert_id = $db->lastInsertId();
+//                header('location:PageView.php?id='.$id);
+//            }
+//
+//            
+//            
+//        }
+//        else
+//        {
+//            echo "input valid data";
+//        }
+//    }
+
+ 
 
 ?>
 
@@ -87,9 +116,9 @@ $username = $_SESSION['user'];
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-<link rel="stylesheet" type="text/css" href="Project.css?3">
+
+<link rel="stylesheet" type="text/css" href="Project.css?9">
     <link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet">
  <style>
      body
@@ -107,11 +136,7 @@ $username = $_SESSION['user'];
    <div>
       <h1><?=$rocket['Name']?></h1>
       <div id = "Data">
-<!--
-        <div>
-         <img src="images/<?= $rocket['Image'];?>" alt = "no image found">
-      </div>
--->
+
       <div id = "dataBlock">
         <p id = "description">Name of the rocket:
           <?=$rocket['Name']?>
@@ -139,7 +164,7 @@ $username = $_SESSION['user'];
       </div>
     </div>
 
-    <h2>Location</h2>
+    <h2 id="location">Location</h2>
     <table id = "locationTable">
       <tr>
         <th>Location</th>
@@ -195,12 +220,18 @@ $username = $_SESSION['user'];
 <!--    action="process_post.php?id=<?=$rocket['LaunchID']?>"-->
     <div id="wrapper">
         <div id="wrapper_blog">
-            <form  method="post">
+            <form  method="post" action="CaptchaProcess.php?id=<?=$rocket['LaunchID']?>">
                 <fieldset>
                     <!-- <legend>Comments.</legend> -->
                     <p>
                         <label for="content">Add a new Comment</label>
                         <textarea name="content" id="content"></textarea>
+                    </p>
+                    <label>Captcha</label>
+                    <p id="Captcha">
+                       
+                        <?php echo $first_digit . " " . $operand . " " . $second_digit . " = "; ?>
+                        <input type="number" name="number"/>
                     </p>
                     <p>
                         <input type="submit" id="button-index" name="Post" value="Post" />

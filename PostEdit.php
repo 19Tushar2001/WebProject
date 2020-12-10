@@ -45,6 +45,34 @@ if (isset($_POST['Delete']))
         header('location:Launch.php');
     }
 
+ if(isset($_POST['imageDelete']))
+                {       
+                     $queryOne = "SELECT * FROM Launch WHERE LaunchID = $id";
+                    $statement = $db->prepare($queryOne);
+                    $statement->execute();
+                    
+                    $data = $statement->fetch();
+                    $path = $data['Image'];
+     
+        $dir_path = "images/$path";
+     
+     
+                   if(!unlink("$dir_path"))
+                   {
+                       echo "Error";
+                   }
+        else
+        {
+            echo "Success";
+        }
+                  
+                     $queryTwo     = "UPDATE Launch SET Image = NULL WHERE LaunchID = $id";   
+                     $newTwoStatement = $db->prepare($queryTwo);
+                     $newTwoStatement->execute();      
+                    
+                    
+                }
+
     elseif (isset($_POST['update'])) 
     {
 
@@ -108,8 +136,8 @@ if (isset($_POST['Delete']))
       <p>
         <input type="hidden" name="id" value="<?=$idValue?>" />
         <input type="submit" name="Update" value="Update" />
-        <input type="submit" name="Add" value="AddNew" />
         <input type="submit" name="Delete" value="Delete" onclick="return confirm('Are you sure you wish to delete this post?')" />
+        <input type="submit" name="imageDelete" value="Delete Image" />
         
       </p>
     </fieldset>

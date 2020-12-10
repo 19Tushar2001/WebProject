@@ -8,6 +8,9 @@
 ----------------->
 
 <?php
+
+
+
 session_start();
 require "db-connect.php";
 error_reporting (E_ALL ^ E_NOTICE); 

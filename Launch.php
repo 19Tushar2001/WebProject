@@ -1,4 +1,6 @@
 <?php
+
+
 include "db-connect.php";
 session_start();
 
@@ -20,6 +22,7 @@ session_start();
 ?>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search</title>
@@ -27,6 +30,7 @@ session_start();
     <link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet">
 </head>
 <body>
+   
     <form action = "search.php"  method = "POST" >
     <input type="text" name ="name">
     <input type="submit" name="command" value ="Search by Name">
